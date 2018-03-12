@@ -8,7 +8,7 @@ public class ZaDuzoZaMalo {
 		int losowaLiczba = new Random().nextInt(100);
 		System.out.println(losowaLiczba);
 		int iloscStrzalow = 0;
-		int strzal;
+		int strzal = -1;
 		int[] historia = new int[0];
 		
 		boolean graAktywna = true;
@@ -16,13 +16,21 @@ public class ZaDuzoZaMalo {
 		while (graAktywna) {
 			System.out.print("Zgadnij liczbê od 0-100: ");
 			Scanner sc = new Scanner(System.in);
-			String zgadnij = sc.nextLine();
-			if (zgadnij.equals("exit")) {
-				System.out.println("Przerwa³eœ gre");
-				graAktywna = false;
-				break;
+			boolean niePoprawna = true;
+			while (niePoprawna) {
+				try {
+					String zgadnij = sc.nextLine();
+					if (zgadnij.equals("exit")) {
+						System.out.println("Przerwa³eœ gre");
+						graAktywna = false;
+						break;
+					}
+					strzal = Integer.parseInt(zgadnij);
+					niePoprawna = false;
+				} catch (NumberFormatException ex) {
+					System.out.println("Poda³eœ niepoprawn¹ liczbê. Spróbuj jeszcze raz:");
+				}
 			}
-			strzal = Integer.parseInt(zgadnij);
 			iloscStrzalow++;
 			int[] tempHistoria = historia;
 			historia = new int[iloscStrzalow];
@@ -38,7 +46,7 @@ public class ZaDuzoZaMalo {
 				graAktywna = false;
 			} else if (strzal > losowaLiczba) {
 				System.out.println("Za duuu¿o");
-			} else {
+			} else if (strzal < losowaLiczba){
 				System.out.println("Za ma³o!!");
 			}
 		}
